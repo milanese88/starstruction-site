@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starstruction — Construction Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --bg: #040d1a;
+  --surface: rgba(255,255,255,0.04);
+  --surface-2: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.07);
+  --border-glow: rgba(37,99,235,0.35);
+  --blue: #2563eb;
+  --cyan: #06b6d4;
+  --green: #10b981;
+  --text: #f0f4ff;
+  --muted: #5a6a85;
+  --muted-2: #8899b0;
+  --grad: linear-gradient(135deg, #2563eb 0%, #06b6d4 55%, #10b981 100%);
+  --grad-text: linear-gradient(135deg, #60a5fa 0%, #22d3ee 55%, #34d399 100%);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  height: 64px;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(4,13,26,0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
+}
+
+.logo {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  cursor: pointer;
+  user-select: none;
+}
+.logo span { font-weight: 300; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--muted-2);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover { color: var(--text); background: var(--surface); }
+.nav-links a.active { color: var(--text); }
+
+.nav-cta {
+  background: var(--grad) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  padding: 9px 20px !important;
+  border-radius: 8px !important;
+  transition: opacity 0.2s, transform 0.2s !important;
+}
+.nav-cta:hover { opacity: 0.9 !important; transform: translateY(-1px) !important; }
+
+/* ── PAGES ── */
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 40px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 700px 500px at 20% 40%, rgba(37,99,235,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 400px at 75% 25%, rgba(6,182,212,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 600px 400px at 55% 85%, rgba(16,185,129,0.08) 0%, transparent 70%);
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 860px; }
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(37,99,235,0.12);
+  border: 1px solid rgba(37,99,235,0.25);
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #93c5fd;
+  margin-bottom: 36px;
+}
+
+.badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #60a5fa;
+  box-shadow: 0 0 8px #60a5fa;
+  animation: blink 2.5s ease-in-out infinite;
+}
+@keyframes blink {
+  0%,100%{opacity:1;box-shadow:0 0 8px #60a5fa}
+  50%{opacity:0.3;box-shadow:none}
+}
+
+h1.hero-title {
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -3.5px;
+  margin-bottom: 28px;
+}
+
+.grad-text {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--muted-2);
+  line-height: 1.75;
+  max-width: 580px;
+  margin: 0 auto 52px;
+  font-weight: 400;
+}
+
+.cta-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: transform 0.2s, opacity 0.2s;
+  font-family: inherit;
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn-primary {
+  background: var(--grad);
+  color: #fff;
+}
+.btn-primary:hover { opacity: 0.92; }
+
+.btn-ghost {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+/* ── SCROLL INDICATOR ── */
+.scroll-hint {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--muted));
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0%,100%{opacity:0.3;transform:scaleY(0.5) translateY(-10px)}
+  50%{opacity:1;transform:scaleY(1) translateY(0)}
+}
+
+/* ── STATS ── */
+.stats-strip {
+  padding: 52px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.015);
+}
+.stat {
+  flex: 1;
+  max-width: 200px;
+  text-align: center;
+  padding: 0 32px;
+  position: relative;
+}
+.stat + .stat::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 15%; bottom: 15%;
+  width: 1px;
+  background: var(--border);
+}
+.stat-num {
+  font-size: 44px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-lbl {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ── SECTION ── */
+.section {
+  padding: 96px 40px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.section-h {
+  font-size: clamp(32px, 4vw, 54px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+
+.section-p {
+  font-size: 18px;
+  color: var(--muted-2);
+  max-width: 560px;
+  line-height: 1.75;
+  margin-bottom: 64px;
+}
+
+/* ── FEATURE CARDS ── */
+.feat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 20px;
+}
+
+.feat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px;
+  transition: border-color 0.3s, transform 0.3s, background 0.3s;
+  cursor: default;
+}
+.feat-card:hover {
+  border-color: rgba(37,99,235,0.35);
+  background: var(--surface-2);
+  transform: translateY(-4px);
+}
+
+.feat-icon {
+  width: 50px; height: 50px;
+  border-radius: 14px;
+  background: var(--grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  font-size: 22px;
+}
+
+.feat-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: -0.3px;
+}
+
+.feat-desc {
+  font-size: 14px;
+  color: var(--muted-2);
+  line-height: 1.75;
+}
+
+/* ── MARQUEE STRIP ── */
+.marquee-wrap {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 0;
+  background: rgba(37,99,235,0.03);
+}
+.marquee-track {
+  display: flex;
+  gap: 64px;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.marquee-item {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.marquee-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--cyan);
+}
+
+/* ── BIG FEATURE BLOCK ── */
+.big-feat {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 80px 40px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.big-feat.reverse { direction: rtl; }
+.big-feat.reverse > * { direction: ltr; }
+
+.big-feat-text h2 {
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.big-feat-text p {
+  font-size: 16px;
+  color: var(--muted-2);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.check-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 28px;
+}
+.check-list li {
+  font-size: 14px;
+  color: var(--muted-2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.check-list li::before {
+  content: '';
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(16,185,129,0.15);
+  border: 1px solid rgba(16,185,129,0.4);
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%2310b981' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.visual-block {
+  border-radius: 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  aspect-ratio: 4/3;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vis-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+}
+.vis-glow-1 {
+  width: 220px; height: 220px;
+  background: rgba(37,99,235,0.3);
+  top: -10%; left: -10%;
+  animation: floatOrb 7s ease-in-out infinite;
+}
+.vis-glow-2 {
+  width: 160px; height: 160px;
+  background: rgba(6,182,212,0.25);
+  bottom: -5%; right: -5%;
+  animation: floatOrb 9s ease-in-out infinite reverse;
+}
+.vis-glow-3 {
+  width: 120px; height: 120px;
+  background: rgba(16,185,129,0.2);
+  bottom: 20%; left: 20%;
+  animation: floatOrb 11s ease-in-out infinite;
+}
+@keyframes floatOrb {
+  0%,100%{transform:translate(0,0)}
+  33%{transform:translate(12px,-8px)}
+  66%{transform:translate(-8px,12px)}
+}
+
+.vis-label {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 24px;
+}
+.vis-label-title {
+  font-size: 20px;
+  font-weight: 800;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.vis-label-sub {
+  font-size: 13px;
+  color: var(--muted-2);
+}
+
+/* ── CTA BANNER ── */
+.cta-banner {
+  padding: 80px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-banner-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 800px 400px at center, rgba(37,99,235,0.1), transparent);
+}
+.cta-box {
+  position: relative;
+  max-width: 680px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid rgba(37,99,235,0.25);
+  border-radius: 26px;
+  padding: 64px 56px;
+}
+.cta-box h2 {
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.cta-box p {
+  font-size: 17px;
+  color: var(--muted-2);
+  line-height: 1.75;
+  margin-bottom: 40px;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 36px 48px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-links {
+  display: flex;
+  gap: 28px;
+}
+.footer-links a {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--muted-2); }
+.footer-copy { font-size: 13px; color: var(--muted); }
+
+/* ── FEATURES PAGE ── */
+.page-hero {
+  padding: 148px 40px 72px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.page-hero-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 700px 300px at 50% 60%, rgba(6,182,212,0.08), transparent);
+}
+.page-hero h1 {
+  font-size: clamp(42px, 6vw, 76px);
+  font-weight: 900;
+  letter-spacing: -3px;
+  line-height: 1.05;
+  margin-bottom: 20px;
+  position: relative;
+}
+.page-hero p {
+  font-size: 19px;
+  color: var(--muted-2);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.75;
+  position: relative;
+}
+
+.feat-big-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+}
+.feat-big-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 40px;
+  transition: border-color 0.3s, transform 0.3s, background 0.3s;
+}
+.feat-big-card:hover {
+  border-color: rgba(6,182,212,0.35);
+  background: var(--surface-2);
+  transform: translateY(-4px);
+}
+.fbc-icon {
+  font-size: 36px;
+  margin-bottom: 20px;
+  display: block;
+}
+.fbc-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+.fbc-desc {
+  font-size: 15px;
+  color: var(--muted-2);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.fbc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.fbc-list li {
+  font-size: 13px;
+  color: var(--muted-2);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.fbc-list li::before {
+  content: '→';
+  color: var(--cyan);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── PRICING PAGE ── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.pricing-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 40px;
+  transition: transform 0.3s, border-color 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.pricing-card:hover { transform: translateY(-4px); }
+.pricing-card.featured {
+  border-color: rgba(37,99,235,0.4);
+  background: rgba(37,99,235,0.06);
+  position: relative;
+}
+.pricing-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--grad);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 18px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.pricing-tier {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.pricing-price {
+  font-size: 52px;
+  font-weight: 900;
+  letter-spacing: -2.5px;
+  line-height: 1;
+  margin-bottom: 6px;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.pricing-desc {
+  font-size: 14px;
+  color: var(--muted-2);
+  line-height: 1.7;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.pricing-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-bottom: 36px;
+  flex: 1;
+}
+.pricing-features li {
+  font-size: 14px;
+  color: var(--muted-2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pricing-features li::before {
+  content: '';
+  width: 16px; height: 16px; flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(16,185,129,0.35);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%2310b981' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 9px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ── ABOUT PAGE ── */
+.about-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 0 40px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.about-split h2 {
+  font-size: clamp(30px, 3.5vw, 48px);
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+.about-split p {
+  font-size: 16px;
+  color: var(--muted-2);
+  line-height: 1.85;
+  margin-bottom: 20px;
+}
+.value-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 0 40px;
+  max-width: 1180px;
+  margin: 60px auto 0;
+}
+.value-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.value-card:hover { border-color: rgba(37,99,235,0.3); transform: translateY(-4px); }
+.value-icon { font-size: 32px; margin-bottom: 14px; display: block; }
+.value-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.value-desc { font-size: 13px; color: var(--muted-2); line-height: 1.7; }
+
+/* ── CONTACT PAGE ── */
+.contact-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted-2); }
+.form-input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 15px;
+  color: var(--text);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  width: 100%;
+}
+.form-input:focus { border-color: rgba(37,99,235,0.5); background: var(--surface-2); }
+.form-input::placeholder { color: var(--muted); }
+select.form-input option { background: #0d1b2e; color: var(--text); }
+textarea.form-input { min-height: 140px; resize: vertical; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .big-feat, .about-split { grid-template-columns: 1fr; gap: 40px; }
+  .big-feat.reverse { direction: ltr; }
+  .value-cards { grid-template-columns: 1fr 1fr; }
+  .stats-strip { gap: 0; flex-wrap: wrap; }
+  .stat { min-width: 120px; }
+  footer { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .form-row { grid-template-columns: 1fr; }
+  .cta-box { padding: 40px 28px; }
+}
+
+@media (max-width: 560px) {
+  .value-cards { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .feat-big-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="logo" onclick="nav('home')">STAR<span>STRUCTION</span></div>
+  <ul class="nav-links">
+    <li><a id="nl-home" class="active" onclick="nav('home')">Home</a></li>
+    <li><a id="nl-features" onclick="nav('features')">Features</a></li>
+    <li><a id="nl-pricing" onclick="nav('pricing')">Pricing</a></li>
+    <li><a id="nl-about" onclick="nav('about')">About</a></li>
+    <li><a id="nl-contact" class="nav-cta" onclick="nav('contact')">Get a Demo</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════ HOME ═══════════════════════════ -->
+<div id="p-home" class="page active">
+
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><div class="badge-dot"></div>AI-Native Construction Intelligence</div>
+      <h1 class="hero-title">The OS for<br><span class="grad-text">Construction</span></h1>
+      <p class="hero-sub">From satellite measurements to signed invoices — one AI-powered platform that runs your entire operation, not just one corner of it.</p>
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="nav('contact')">Request a Demo &rarr;</button>
+        <button class="btn btn-ghost" onclick="nav('features')">Explore Features</button>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <div class="stats-strip">
+    <div class="stat"><div class="stat-num">10x</div><div class="stat-lbl">Faster estimating</div></div>
+    <div class="stat"><div class="stat-num">98%</div><div class="stat-lbl">Measurement accuracy</div></div>
+    <div class="stat"><div class="stat-num">60%</div><div class="stat-lbl">Less admin time</div></div>
+    <div class="stat"><div class="stat-num">AI</div><div class="stat-lbl">Native platform</div></div>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">AI Measurements <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Smart CRM <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Auto Proposals <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Crew Scheduling <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Invoice Intelligence <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Material Orders <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Permit Tracking <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Gmail Integration <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AI Measurements <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Smart CRM <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Auto Proposals <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Crew Scheduling <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Invoice Intelligence <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Material Orders <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Permit Tracking <div class="marquee-dot"></div></div>
+      <div class="marquee-item">Gmail Integration <div class="marquee-dot"></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="tag">Platform</span>
+    <h2 class="section-h">Everything connected.<br>Nothing missed.</h2>
+    <p class="section-p">One platform where every tool talks to every other tool — no manual data re-entry, no switching apps, no gaps.</p>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">🛰️</div>
+        <div class="feat-title">AI Aerial Measurement</div>
+        <div class="feat-desc">Upload a satellite image. AI maps every plane, ridge, hip, valley, and flashing detail with sub-inch precision in minutes.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🧠</div>
+        <div class="feat-title">Intelligent CRM</div>
+        <div class="feat-desc">A pipeline that shows you where every dollar is, what's at risk, and what to act on — without digging through notes.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📄</div>
+        <div class="feat-title">Automated Proposals</div>
+        <div class="feat-desc">Measurements flow directly into branded proposals. Multiple pricing tiers, digital signature ready, sent in seconds.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📅</div>
+        <div class="feat-title">Crew Scheduling</div>
+        <div class="feat-desc">Day, week, and month views with capacity planning. Stop double-booking your best crews. Know who's where at all times.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">💰</div>
+        <div class="feat-title">Smart Invoicing</div>
+        <div class="feat-desc">Draw schedules, multi-payment tracking, automatic reconciliation. Invoicing that works the way construction billing actually works.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔗</div>
+        <div class="feat-title">Deep Integrations</div>
+        <div class="feat-desc">Gmail, Google Calendar, and more. Your data flows where your team already works — no extra apps, no copy-paste.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="big-feat">
+    <div class="big-feat-text">
+      <span class="tag">Measurement</span>
+      <h2>Satellite precision.<br><span class="grad-text">Human speed.</span></h2>
+      <p>Our AI measurement engine turns any aerial image into a complete takeoff. Every plane detected, every edge traced, every material quantity calculated — automatically.</p>
+      <p>What used to take half a day now takes minutes. And it's more accurate than manual measurement.</p>
+      <ul class="check-list">
+        <li>Multi-level roof support with automatic plane detection</li>
+        <li>Cricket, chimney, and flashing detection</li>
+        <li>Instant material quantity export</li>
+        <li>Works on any structure — roofing, siding, facades</li>
+      </ul>
+    </div>
+    <div class="visual-block">
+      <div class="vis-glow vis-glow-1"></div>
+      <div class="vis-glow vis-glow-2"></div>
+      <div class="vis-glow vis-glow-3"></div>
+      <div class="vis-label">
+        <div class="vis-label-title">AI Measurement Engine</div>
+        <div class="vis-label-sub">Satellite &rarr; Takeoff in minutes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="big-feat reverse">
+    <div class="big-feat-text">
+      <span class="tag">Operations</span>
+      <h2>From lead to<br><span class="grad-text">final invoice</span>.</h2>
+      <p>Track every job through your pipeline, generate proposals automatically, schedule crews, order materials, pull permits, and invoice — all from one platform.</p>
+      <p>No spreadsheets. No sticky notes. No chasing down what happened on a job from three months ago.</p>
+      <ul class="check-list">
+        <li>Lead-to-close pipeline with revenue tracking</li>
+        <li>Work orders and material orders connected to jobs</li>
+        <li>Permit and inspection status tracking</li>
+        <li>Full job history, always accessible</li>
+      </ul>
+    </div>
+    <div class="visual-block">
+      <div class="vis-glow vis-glow-1"></div>
+      <div class="vis-glow vis-glow-2"></div>
+      <div class="vis-glow vis-glow-3"></div>
+      <div class="vis-label">
+        <div class="vis-label-title">Operations Platform</div>
+        <div class="vis-label-sub">Every job. Every detail. One place.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <div class="cta-banner-glow"></div>
+    <div class="cta-box">
+      <span class="tag" style="display:block;margin-bottom:16px;">Ready?</span>
+      <h2>Stop managing with<br>disconnected tools.</h2>
+      <p>Starstruction gives your team one platform powered by AI. See it in action with a live demo built around your business.</p>
+      <button class="btn btn-primary" onclick="nav('contact')" style="font-size:17px;padding:18px 44px;">Book a Demo &rarr;</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="logo" style="cursor:pointer" onclick="nav('home')">STAR<span>STRUCTION</span></div>
+    <div class="footer-copy">&copy; 2026 Starstruction. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#" onclick="nav('contact');return false;">Contact</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════ FEATURES ═══════════════════════════ -->
+<div id="p-features" class="page">
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <span class="tag" style="position:relative">Platform Features</span>
+    <h1>Built for how you<br><span class="grad-text">actually work</span></h1>
+    <p>Every feature designed around the reality of running a construction business — not some consultant's idea of it.</p>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="feat-big-grid">
+
+      <div class="feat-big-card">
+        <span class="fbc-icon">🛰️</span>
+        <div class="fbc-title">AI Aerial Measurement</div>
+        <div class="fbc-desc">Upload a satellite or drone image and our AI maps every plane, ridge, hip, valley, flashing, and penetration with sub-inch accuracy. Takeoffs that used to take hours now take minutes.</div>
+        <ul class="fbc-list">
+          <li>Multi-level roof support</li>
+          <li>Automatic plane and edge detection</li>
+          <li>Cricket and chimney detection</li>
+          <li>Material quantity auto-calculation</li>
+          <li>DIY measurement for homeowners</li>
+        </ul>
+      </div>
+
+      <div class="feat-big-card">
+        <span class="fbc-icon">🧠</span>
+        <div class="fbc-title">Intelligent CRM</div>
+        <div class="fbc-desc">A pipeline built for contractors. Track every lead, every status change, every conversation. Surface what needs attention before it becomes a problem.</div>
+        <ul class="fbc-list">
+          <li>Lead-to-close pipeline management</li>
+          <li>Revenue and KPI dashboard</li>
+          <li>Permit and inspection tracking</li>
+          <li>Document and photo management</li>
+          <li>Per-job activity history</li>
+        </ul>
+      </div>
+
+      <div class="feat-big-card">
+        <span class="fbc-icon">📄</span>
+        <div class="fbc-title">Proposal Builder</div>
+        <div class="fbc-desc">Turn measurements into professionally branded proposals in seconds. Present multiple pricing options, send directly via email, and collect digital signatures.</div>
+        <ul class="fbc-list">
+          <li>Branded PDF generation</li>
+          <li>Multi-tier pricing options</li>
+          <li>One-click email delivery</li>
+          <li>Digital signature ready</li>
+          <li>Custom line items and adders</li>
+        </ul>
+      </div>
+
+      <div class="feat-big-card">
+        <span class="fbc-icon">💰</span>
+        <div class="fbc-title">Smart Invoicing</div>
+        <div class="fbc-desc">Draw schedules, multi-payment tracking, and automatic credit/shortfall reconciliation. Invoicing that actually understands how construction billing works.</div>
+        <ul class="fbc-list">
+          <li>Payment schedule management</li>
+          <li>Multi-payment collection</li>
+          <li>Auto credit reconciliation</li>
+          <li>Professional invoice PDFs</li>
+          <li>Payment history ledger</li>
+        </ul>
+      </div>
+
+      <div class="feat-big-card">
+        <span class="fbc-icon">📅</span>
+        <div class="fbc-title">Crew Scheduling</div>
+        <div class="fbc-desc">Day, week, and month calendar views with crew capacity planning. Know who's available, what's booked, and where your capacity gaps are before they become problems.</div>
+        <ul class="fbc-list">
+          <li>Day / Week / Month views</li>
+          <li>Crew capacity planning</li>
+          <li>Per-job scheduling timeline</li>
+          <li>Multi-day job support</li>
+          <li>Appointment management</li>
+        </ul>
+      </div>
+
+      <div class="feat-big-card">
+        <span class="fbc-icon">📦</span>
+        <div class="fbc-title">Material & Work Orders</div>
+        <div class="fbc-desc">Generate material orders directly from your measurements and proposals. Track work orders through completion. Everything tied to the job, nothing floating in a spreadsheet.</div>
+        <ul class="fbc-list">
+          <li>Measurement-driven material orders</li>
+          <li>Work order tracking</li>
+          <li>Supplier order management</li>
+          <li>Connected to job timeline</li>
+          <li>PDF order generation</li>
+        </ul>
+      </div>
+
+      <div class="feat-big-card">
+        <span class="fbc-icon">🔗</span>
+        <div class="fbc-title">Integrations</div>
+        <div class="fbc-desc">Connect Gmail and Google Calendar so your team stays in sync without switching apps. More integrations on the way — built around how construction companies actually communicate.</div>
+        <ul class="fbc-list">
+          <li>Gmail integration</li>
+          <li>Google Calendar sync</li>
+          <li>Email proposal delivery</li>
+          <li>More coming soon</li>
+        </ul>
+      </div>
+
+      <div class="feat-big-card">
+        <span class="fbc-icon">🔒</span>
+        <div class="fbc-title">Built to Scale</div>
+        <div class="fbc-desc">Multi-company support, per-job overrides, and a SaaS architecture designed for growth. Whether you have one crew or fifty, the platform grows with you.</div>
+        <ul class="fbc-list">
+          <li>Multi-company SaaS architecture</li>
+          <li>Per-job customization</li>
+          <li>Company branding controls</li>
+          <li>Role-based access</li>
+          <li>Supabase-backed, always-on data</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <div class="cta-banner-glow"></div>
+    <div class="cta-box">
+      <h2>See it live in<br><span class="grad-text">your business</span>.</h2>
+      <p>We'll walk you through the platform using real examples from your type of work. No generic demos.</p>
+      <button class="btn btn-primary" onclick="nav('contact')" style="font-size:16px;padding:16px 40px;">Book a Demo &rarr;</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="logo" style="cursor:pointer" onclick="nav('home')">STAR<span>STRUCTION</span></div>
+    <div class="footer-copy">&copy; 2026 Starstruction. All rights reserved.</div>
+    <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════ PRICING ═══════════════════════════ -->
+<div id="p-pricing" class="page">
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <span class="tag" style="position:relative">Pricing</span>
+    <h1>Simple, transparent<br><span class="grad-text">pricing</span></h1>
+    <p>Every plan includes the full platform. Tell us about your operation and we'll find the right fit.</p>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-price">Custom</div>
+        <div class="pricing-desc">For solo contractors and small crews ready to leave spreadsheets behind.</div>
+        <ul class="pricing-features">
+          <li>AI Measurement Tool</li>
+          <li>CRM &amp; Lead Pipeline</li>
+          <li>Proposal Builder</li>
+          <li>Invoicing &amp; Payments</li>
+          <li>Material Orders</li>
+          <li>Email Support</li>
+        </ul>
+        <button class="btn btn-ghost" onclick="nav('contact')" style="width:100%;justify-content:center">Contact Us</button>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Most Popular</div>
+        <div class="pricing-tier" style="color:#93c5fd">Professional</div>
+        <div class="pricing-price">Custom</div>
+        <div class="pricing-desc">For growing operations that need scheduling, integrations, and the full platform.</div>
+        <ul class="pricing-features">
+          <li>Everything in Starter</li>
+          <li>Crew Scheduling</li>
+          <li>Google Workspace Integration</li>
+          <li>Work Orders</li>
+          <li>Permit &amp; Inspection Tracking</li>
+          <li>Priority Support</li>
+        </ul>
+        <button class="btn btn-primary" onclick="nav('contact')" style="width:100%;justify-content:center">Contact Us</button>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-tier">Enterprise</div>
+        <div class="pricing-price">Custom</div>
+        <div class="pricing-desc">For large contractors and multi-company organizations that need advanced control.</div>
+        <ul class="pricing-features">
+          <li>Everything in Professional</li>
+          <li>Multi-company Support</li>
+          <li>Advanced Analytics</li>
+          <li>Custom Integrations</li>
+          <li>Dedicated Onboarding</li>
+          <li>SLA-backed Support</li>
+        </ul>
+        <button class="btn btn-ghost" onclick="nav('contact')" style="width:100%;justify-content:center">Contact Us</button>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:60px;padding:40px;background:var(--surface);border:1px solid var(--border);border-radius:18px;max-width:620px;margin-left:auto;margin-right:auto;">
+      <div style="font-size:15px;color:var(--muted-2);line-height:1.8">Not sure which plan fits? <strong style="color:var(--text)">Every demo includes a pricing conversation.</strong> We'll build a plan around your actual operation — crew size, job volume, and growth plans.</div>
+      <button class="btn btn-primary" onclick="nav('contact')" style="margin-top:24px">Talk to Us &rarr;</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="logo" style="cursor:pointer" onclick="nav('home')">STAR<span>STRUCTION</span></div>
+    <div class="footer-copy">&copy; 2026 Starstruction. All rights reserved.</div>
+    <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
+<div id="p-about" class="page">
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <span class="tag" style="position:relative">Our Story</span>
+    <h1>Built on a rooftop.<br><span class="grad-text">Designed for the future.</span></h1>
+    <p>We built the platform we always wished existed — powered by AI, built for the field.</p>
+  </div>
+
+  <div class="about-split" style="padding-bottom:80px">
+    <div>
+      <h2>Construction intelligence, <span class="grad-text">finally</span>.</h2>
+      <p>Starstruction was born from a simple frustration: the best contractors in the world were still running their businesses on spreadsheets, whiteboards, and gut instinct. Not because they didn't want better tools — but because nothing built for construction actually worked the way construction works.</p>
+      <p>So we built it ourselves. Starting with roofing — one of the most complex, margin-sensitive trades in construction — and designing a platform that handles the entire lifecycle of a job, from the first satellite measurement to the final payment.</p>
+      <p>Today Starstruction serves roofing contractors and general contractors who refuse to let outdated software slow them down.</p>
+      <button class="btn btn-primary" onclick="nav('contact')" style="margin-top:16px">Get in Touch &rarr;</button>
+    </div>
+    <div class="visual-block" style="min-height:380px">
+      <div class="vis-glow vis-glow-1"></div>
+      <div class="vis-glow vis-glow-2"></div>
+      <div class="vis-glow vis-glow-3"></div>
+      <div class="vis-label">
+        <div class="vis-label-title">Construction Intelligence</div>
+        <div class="vis-label-sub">From rooftop to platform</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="value-cards">
+    <div class="value-card">
+      <span class="value-icon">⚡</span>
+      <div class="value-title">Speed</div>
+      <div class="value-desc">We obsess over cutting the time between first contact and signed contract. Every hour saved is money earned.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🎯</span>
+      <div class="value-title">Accuracy</div>
+      <div class="value-desc">AI-powered measurements and smart calculations eliminate the costly mistakes that eat into margins.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">📈</span>
+      <div class="value-title">Growth</div>
+      <div class="value-desc">More jobs won, more projects managed, less chaos. The platform that scales as your operation scales.</div>
+    </div>
+  </div>
+
+  <div class="cta-banner" style="margin-top:80px">
+    <div class="cta-banner-glow"></div>
+    <div class="cta-box">
+      <h2>Join the contractors<br><span class="grad-text">already ahead</span>.</h2>
+      <p>See what Starstruction looks like running your business. We'll build the demo around your actual workflow.</p>
+      <button class="btn btn-primary" onclick="nav('contact')" style="font-size:16px;padding:16px 40px;">Book a Demo &rarr;</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="logo" style="cursor:pointer" onclick="nav('home')">STAR<span>STRUCTION</span></div>
+    <div class="footer-copy">&copy; 2026 Starstruction. All rights reserved.</div>
+    <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+<div id="p-contact" class="page">
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <span class="tag" style="position:relative">Get Started</span>
+    <h1>Let's talk about<br><span class="grad-text">your business</span></h1>
+    <p>Tell us about your operation and we'll put together a demo built around your actual workflow.</p>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="contact-wrap">
+      <form id="contact-form" onsubmit="submitForm(event)" style="display:flex;flex-direction:column;gap:20px">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" placeholder="John" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" placeholder="Smith" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Company Name</label>
+          <input class="form-input" type="text" placeholder="Smith Roofing LLC" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" placeholder="john@smithroofing.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input class="form-input" type="tel" placeholder="(555) 000-0000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Type of Contractor</label>
+          <select class="form-input">
+            <option value="">Select one&hellip;</option>
+            <option>Roofing Contractor</option>
+            <option>General Contractor</option>
+            <option>Both</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tell us about your business</label>
+          <textarea class="form-input" placeholder="How many jobs per month? How big is your team? What's your biggest operational challenge right now?"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" id="submit-btn" style="font-size:16px;padding:17px">Send Message &rarr;</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="logo" style="cursor:pointer" onclick="nav('home')">STAR<span>STRUCTION</span></div>
+    <div class="footer-copy">&copy; 2026 Starstruction. All rights reserved.</div>
+    <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </footer>
+</div>
+
+<script>
+const pages = ['home','features','pricing','about','contact'];
+
+function nav(name) {
+  pages.forEach(p => {
+    document.getElementById('p-'+p).classList.remove('active');
+    const el = document.getElementById('nl-'+p);
+    if (el) el.classList.remove('active');
+  });
+  document.getElementById('p-'+name).classList.add('active');
+  const nl = document.getElementById('nl-'+name);
+  if (nl) nl.classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function submitForm(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Message sent ✓';
+  btn.style.opacity = '0.6';
+  btn.disabled = true;
+}
+</script>
+</body>
+</html>
