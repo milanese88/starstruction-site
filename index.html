@@ -826,6 +826,7 @@ textarea.form-input { min-height: 140px; resize: vertical; }
 @media (max-width: 900px) {
   nav { padding: 0 20px; }
   .nav-links { display: none; }
+  .nav-login-mobile { display: block !important; }
   .big-feat, .about-split { grid-template-columns: 1fr; gap: 40px; }
   .big-feat.reverse { direction: ltr; }
   .value-cards { grid-template-columns: 1fr 1fr; }
@@ -848,6 +849,7 @@ textarea.form-input { min-height: 140px; resize: vertical; }
 <!-- NAVIGATION -->
 <nav>
   <div class="logo" onclick="nav('home')">STAR<span>STRUCTION</span></div>
+  <a class="nav-login-mobile" href="https://www.starstruct.ai" target="_blank" style="display:none; border:1px solid var(--border); color:var(--text); padding:6px 14px; border-radius:6px; font-size:14px; text-decoration:none; margin-left:auto;">Login</a>
   <ul class="nav-links">
     <li><a id="nl-home" class="active" onclick="nav('home')">Home</a></li>
     <li><a id="nl-features" onclick="nav('features')">Features</a></li>
