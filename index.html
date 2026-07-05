@@ -102,13 +102,14 @@ nav {
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 120px 64px 80px;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 40px 80px;
   position: relative;
   overflow: hidden;
-  gap: 48px;
 }
 
 .hero-grid {
@@ -130,7 +131,7 @@ nav {
     radial-gradient(ellipse 600px 400px at 55% 85%, rgba(16,185,129,0.08) 0%, transparent 70%);
 }
 
-.hero-content { position: relative; z-index: 1; }
+.hero-content { position: relative; z-index: 1; max-width: 860px; }
 
 .hero-badge {
   display: inline-flex;
@@ -161,11 +162,11 @@ nav {
 }
 
 h1.hero-title {
-  font-size: clamp(40px, 5vw, 72px);
+  font-size: clamp(52px, 8vw, 96px);
   font-weight: 900;
   line-height: 1.02;
-  letter-spacing: -3px;
-  margin-bottom: 24px;
+  letter-spacing: -3.5px;
+  margin-bottom: 28px;
 }
 
 .grad-text {
@@ -176,133 +177,20 @@ h1.hero-title {
 }
 
 .hero-sub {
-  font-size: clamp(15px, 1.6vw, 18px);
+  font-size: clamp(16px, 2vw, 20px);
   color: var(--muted-2);
   line-height: 1.75;
-  max-width: 520px;
-  margin: 0 0 40px;
+  max-width: 580px;
+  margin: 0 auto 52px;
   font-weight: 400;
 }
 
 .cta-row {
   display: flex;
   gap: 14px;
-  justify-content: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
 }
-
-/* ── HERO PROOF ── */
-.hero-proof {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  font-size: 12px;
-  color: var(--muted);
-}
-.hero-proof-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--muted); }
-
-/* ── HERO VISUAL / APP MOCKUP ── */
-.hero-visual { position: relative; z-index: 1; }
-
-.browser-frame {
-  background: rgba(4,12,24,0.9);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.07);
-}
-.browser-bar {
-  background: rgba(255,255,255,0.03);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.browser-dots { display: flex; gap: 6px; }
-.browser-dot { width: 9px; height: 9px; border-radius: 50%; }
-.bd-r { background: #ff5f57; }
-.bd-y { background: #febc2e; }
-.bd-g { background: #28c840; }
-.browser-url {
-  flex: 1;
-  background: rgba(255,255,255,0.05);
-  border-radius: 5px;
-  padding: 4px 12px;
-  font-size: 10px;
-  color: var(--muted);
-  font-family: monospace;
-  text-align: center;
-}
-.app-shell {
-  display: grid;
-  grid-template-columns: 155px 1fr;
-  height: 360px;
-  background: #040c18;
-}
-.app-sidebar {
-  background: #030a14;
-  border-right: 1px solid rgba(255,255,255,0.05);
-  padding: 12px 0;
-}
-.app-sidebar-top {
-  padding: 0 14px 12px;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  color: #60a5fa;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  margin-bottom: 8px;
-}
-.app-nav-item {
-  padding: 7px 14px;
-  font-size: 10px;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: default;
-  user-select: none;
-}
-.app-nav-item.ani {
-  background: rgba(37,99,235,0.12);
-  color: #93c5fd;
-  border-left: 2px solid var(--blue);
-  padding-left: 12px;
-}
-.app-main { padding: 14px; overflow: hidden; }
-.app-kpi-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 7px;
-  margin-bottom: 12px;
-}
-.app-kpi {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 7px;
-  padding: 10px;
-}
-.app-kpi-val { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
-.app-kpi-lbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-.app-section-label { font-size: 9px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
-.app-pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-.pipe-col { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 6px; padding: 7px; }
-.pipe-col-hd {
-  font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-  margin-bottom: 6px; padding-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05);
-  display: flex; justify-content: space-between; align-items: center;
-}
-.pipe-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; padding: 6px; margin-bottom: 4px; }
-.pipe-card-name { font-size: 9px; color: var(--text); font-weight: 600; margin-bottom: 2px; }
-.pipe-card-val { font-size: 8px; color: var(--cyan); }
-.pipe-card-addr { font-size: 8px; color: var(--muted); }
-.pipe-badge { font-size: 8px; padding: 1px 6px; border-radius: 100px; font-weight: 700; }
-.pb-blue { background: rgba(37,99,235,0.2); color: #93c5fd; }
-.pb-green { background: rgba(16,185,129,0.2); color: #6ee7b7; }
-.pb-cyan { background: rgba(6,182,212,0.2); color: #67e8f9; }
-.pb-orange { background: rgba(245,158,11,0.2); color: #fcd34d; }
 
 .btn {
   display: inline-flex;
@@ -939,12 +827,6 @@ textarea.form-input { min-height: 140px; resize: vertical; }
   nav { padding: 0 20px; }
   .nav-links { display: none; }
   .nav-login-mobile { display: block !important; }
-  .hero { grid-template-columns: 1fr; padding: 120px 24px 60px; gap: 0; }
-  .hero-visual { display: none; }
-  .hero-content { text-align: center; }
-  .hero-sub { margin: 0 auto 40px; }
-  .cta-row { justify-content: center; }
-  .hero-proof { justify-content: center; }
   .big-feat, .about-split { grid-template-columns: 1fr; gap: 40px; }
   .big-feat.reverse { direction: ltr; }
   .value-cards { grid-template-columns: 1fr 1fr; }
@@ -981,95 +863,23 @@ textarea.form-input { min-height: 140px; resize: vertical; }
 <!-- ═══════════════════════════ HOME ═══════════════════════════ -->
 <div id="p-home" class="page active">
 
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-
-  <div class="hero-content">
-    <div class="hero-proof">
-      <span>Built for roofing &amp; construction contractors</span>
-      <div class="hero-proof-dot"></div>
-      <span>Early Access Now Open</span>
-    </div>
-    <div class="hero-badge"><div class="badge-dot"></div>AI-Native ERP &amp; CRM Platform</div>
-    <h1 class="hero-title">The OS for<br><span class="grad-text">Construction</span></h1>
-    <p class="hero-sub">From satellite measurements to signed invoices — one AI-powered platform that replaces your CRM, estimating tool, scheduling software, and invoicing system.</p>
-    <div class="cta-row">
-      <button class="btn btn-primary" onclick="nav('contact')">Request a Demo &rarr;</button>
-      <button class="btn btn-ghost" onclick="nav('features')">Explore Features</button>
-    </div>
-  </div>
-
-  <div class="hero-visual">
-    <div class="browser-frame">
-      <div class="browser-bar">
-        <div class="browser-dots">
-          <div class="browser-dot bd-r"></div>
-          <div class="browser-dot bd-y"></div>
-          <div class="browser-dot bd-g"></div>
-        </div>
-        <div class="browser-url">app.starstruct.ai</div>
-      </div>
-      <div class="app-shell">
-        <div class="app-sidebar">
-          <div class="app-sidebar-top">STARSTRUCTION</div>
-          <div class="app-nav-item ani">📊 Dashboard</div>
-          <div class="app-nav-item">👤 CRM</div>
-          <div class="app-nav-item">📄 Proposals</div>
-          <div class="app-nav-item">📅 Schedule</div>
-          <div class="app-nav-item">🛰️ Measurements</div>
-          <div class="app-nav-item">💰 Invoices</div>
-          <div class="app-nav-item">📦 Materials</div>
-          <div class="app-nav-item">📋 Work Orders</div>
-          <div class="app-nav-item">📜 Permits</div>
-        </div>
-        <div class="app-main">
-          <div class="app-kpi-row">
-            <div class="app-kpi">
-              <div class="app-kpi-val">$284k</div>
-              <div class="app-kpi-lbl">Active Pipeline</div>
-            </div>
-            <div class="app-kpi">
-              <div class="app-kpi-val">14</div>
-              <div class="app-kpi-lbl">Open Jobs</div>
-            </div>
-            <div class="app-kpi">
-              <div class="app-kpi-val">$47k</div>
-              <div class="app-kpi-lbl">Collected MTD</div>
-            </div>
-          </div>
-          <div class="app-section-label">Job Pipeline</div>
-          <div class="app-pipeline">
-            <div class="pipe-col">
-              <div class="pipe-col-hd"><span>Lead</span><span class="pipe-badge pb-blue">3</span></div>
-              <div class="pipe-card"><div class="pipe-card-name">R. Martinez</div><div class="pipe-card-addr">1420 Oak Dr</div></div>
-              <div class="pipe-card"><div class="pipe-card-name">S. Thompson</div><div class="pipe-card-addr">889 Pine Ave</div></div>
-            </div>
-            <div class="pipe-col">
-              <div class="pipe-col-hd"><span>Proposal</span><span class="pipe-badge pb-cyan">4</span></div>
-              <div class="pipe-card"><div class="pipe-card-name">J. Wilson</div><div class="pipe-card-val">$18,400</div></div>
-              <div class="pipe-card"><div class="pipe-card-name">K. Davis</div><div class="pipe-card-val">$24,800</div></div>
-            </div>
-            <div class="pipe-col">
-              <div class="pipe-col-hd"><span>Contracted</span><span class="pipe-badge pb-orange">5</span></div>
-              <div class="pipe-card"><div class="pipe-card-name">M. Johnson</div><div class="pipe-card-val">$31,200</div></div>
-              <div class="pipe-card"><div class="pipe-card-name">L. Garcia</div><div class="pipe-card-val">$19,600</div></div>
-            </div>
-            <div class="pipe-col">
-              <div class="pipe-col-hd"><span>Complete</span><span class="pipe-badge pb-green">2</span></div>
-              <div class="pipe-card"><div class="pipe-card-name">T. Brown</div><div class="pipe-card-val">$28,500</div></div>
-            </div>
-          </div>
-        </div>
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><div class="badge-dot"></div>AI-Native Construction Intelligence</div>
+      <h1 class="hero-title">The OS for<br><span class="grad-text">Construction</span></h1>
+      <p class="hero-sub">From satellite measurements to signed invoices — one AI-powered platform that runs your entire operation, not just one corner of it.</p>
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="nav('contact')">Request a Demo &rarr;</button>
+        <button class="btn btn-ghost" onclick="nav('features')">Explore Features</button>
       </div>
     </div>
-  </div>
-
-  <div class="scroll-hint" style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
-  </div>
-</section>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
 
   <div class="stats-strip">
     <div class="stat"><div class="stat-num">10x</div><div class="stat-lbl">Faster estimating</div></div>
